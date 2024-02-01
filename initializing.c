@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
-
 int		init_philos(t_data *data)
 {
 	int		i;
@@ -71,6 +69,26 @@ int		init_args(char **argv)
 		i++;
 	}
 	init_philos(data);
+	return (0);
+}
+
+int		init_threads(t_data	*data)
+{
+	int i;
+
+	i = 0;
+	while (i <data->phils[i].num_of_phils)
+	{
+		pthread_create(&data->phils[i].id, NULL, &munching, &data->phils[i]);
+		i++;
+	}
+	death_checker(data);
+	i = 0;
+	while (i <data->phils[i].num_of_phils)
+	{
+		pthread_join(&data->phils[i], NULL);
+		i++;
+	}
 	return (0);
 }
 
