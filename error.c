@@ -60,3 +60,9 @@ int		error_messanger(int nbr)
 		ft_putstr(": Cucked");
 	return (1);
 }
+void		death_print(t_data	*data, int philosopher_id)
+{
+	pthread_mutex_lock(&data->write_lock);
+	printf("Philosopher %d has died.\n", philosopher_id);
+	pthread_mutex_unlock(&data->write_lock);
+}
