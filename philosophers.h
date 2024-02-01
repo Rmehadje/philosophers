@@ -40,6 +40,7 @@ typedef struct			s_phil
 	size_t					time_before_death;
 	size_t					time_to_sleep;
 	pthread_mutex_t		*left_f;
+	pthread_mutex_t		*locked;
 	pthread_mutex_t		*right_f;
 	pthread_mutex_t		*dead_lock;
 	pthread_mutex_t		*meal_lock;
