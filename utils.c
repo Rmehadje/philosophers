@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 16:53:14 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/01/30 18:30:42 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/02/03 17:00:00 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void		print_in_routine(char *str, t_phil	*phil, int id)
 	long long	time;
 
 	pthread_mutex_lock((phil->write_lock));
-	time = ft_real_time() - phil->first_ts;
+	time = ft_real_time() - phil->start;
 	if	(!(phil->isdead))
 	{
-		printf("%lli", time);
-		printf("%i", id + 1);
+		printf("%lli ", time);
+		printf("%i ", id);
 		printf("%s\n", str);
 	}
 	pthread_mutex_unlock((phil->write_lock));
@@ -79,3 +79,4 @@ int		sleep_mode(size_t		MS)
 		usleep(500);
 	return (0);
 }
+
