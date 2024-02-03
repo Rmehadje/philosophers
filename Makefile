@@ -1,15 +1,17 @@
 NAME = philosophers
+
+SOURCE = philosophers.c utils.c initializing.c error.c routine.c 
+
+CFLAGS = -Wall -Werror -Wextra -fsanitize=thread
+
+OBJ = $(SOURCE:.c=.o)
+
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
-SOURCE = philosophers.c utils.c initializing.c error.c routine.c
-
-OBJ = $(SOURCE.c=.o)
-
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(SOURCE) -o $(NAME)
+	$(CC) $(OBJ) $(CFLAGS) -o $(NAME)
 
 
 clean:
