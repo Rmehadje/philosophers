@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:42:43 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/01/30 19:12:45 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/02/03 18:26:00 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int		error_messanger(int nbr)
 void		death_print(t_data	*data, int philosopher_id)
 {
 	pthread_mutex_lock(&data->write_lock);
-	printf("Philosopher %d has died.\n", philosopher_id);
+	printf("%d has died.\n", philosopher_id);
 	pthread_mutex_unlock(&data->write_lock);
 }
