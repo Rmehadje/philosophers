@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:14:37 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/02/03 19:12:56 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:19:32 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct			s_phil
 	int						meals_eaten;
 	int						num_of_phils;
 	int						isdead;
+	int						to_die;
 	long long					start;
 	long long					time_to_eat;
 	long long					time_before_death;

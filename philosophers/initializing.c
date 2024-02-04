@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:48:13 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/02/04 16:52:48 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:39:47 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,6 @@ int	init_philos(t_data *data)
 		data->phils[i].dead = &data->dead;
 		i++;
 	}
-	data->phils[0].left_f = &data->forks[0];
-	data->phils[0].right_f = &data->forks[data->phils[0].num_of_phils - 1];
-	i = 1;
-	while (i < data->phils[0].num_of_phils)
-	{
-		data->phils[i].left_f = &data->forks[i];
-		data->phils[i].right_f = &data->forks[i - 1];
-		i++;
-	}
 	return (0);
 }
 
@@ -52,6 +43,15 @@ int	init_forks(t_data *data)
 	while (i < data->phils[i].num_of_phils)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
+		i++;
+	}
+	data->phils[0].left_f = &data->forks[0];
+	data->phils[0].right_f = &data->forks[data->phils[0].num_of_phils - 1];
+	i = 1;
+	while (i < data->phils[0].num_of_phils)
+	{
+		data->phils[i].left_f = &data->forks[i];
+		data->phils[i].right_f = &data->forks[i - 1];
 		i++;
 	}
 	return (0);
@@ -84,6 +84,7 @@ int	init_args(char **argv)
 	return (0);
 }
 
+
 int		init_threads(t_data	*data)
 {
 	int	i;
@@ -95,7 +96,9 @@ int		init_threads(t_data	*data)
 	{
 		data->phils[i].start = ft_real_time();
 		data->phils[i].last_meal = ft_real_time();
-		data->phils[i].ttd = data->phils[i].time_before_death;
+		data->phils[i].ttd = 0;
+		data->phils[i].to_die = data->phils[i].time_before_death;
+
 		i++;
 	}
 	i = 0;

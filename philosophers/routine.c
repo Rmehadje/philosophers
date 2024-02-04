@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:26:54 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/02/04 16:23:18 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/02/04 18:30:42 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void		eating(t_phil *phil)
 	sleep_mode(phil->time_to_eat);
 	pthread_mutex_lock(&phil->tmp2);
 	phil->last_meal = ft_real_time();
-	phil->ttd = phil->last_meal + phil->time_before_death - phil->time_to_sleep;
+	phil->to_die -= phil->time_to_eat;
+	phil->ttd = phil->last_meal + phil->to_die;
 	pthread_mutex_unlock(&phil->tmp2);
 	pthread_mutex_lock(&phil->tmp);
 	phil->eating = 0;
@@ -54,7 +55,6 @@ void		*munching(void	*param)
 	t_phil	*phil;
 	int			f;
 
-	f = 0;
 	phil = (t_phil *)param;
 	data = phil->data;
 	if ((phil->id % 2)== 0)
