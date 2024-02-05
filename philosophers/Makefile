@@ -1,6 +1,5 @@
-NAME = philosophers
-
-SOURCE = philosophers.c utils.c initializing.c error.c routine.c 
+NAME = philo
+SOURCE = philosophers.c utils.c initializing.c error.c routine.c extra.c
 
 CFLAGS = -Wall -Werror -Wextra
 

@@ -6,7 +6,7 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:48:13 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/02/04 18:39:47 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/02/04 20:26:32 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,10 @@ int	init_args(char **argv)
 	return (0);
 }
 
-
-int		init_threads(t_data	*data)
+void	init_time(t_data *data)
 {
 	int	i;
-	int	f;
 
-	f = 0;
 	i = 0;
 	while (i < data->phils[i].num_of_phils)
 	{
@@ -98,51 +95,33 @@ int		init_threads(t_data	*data)
 		data->phils[i].last_meal = ft_real_time();
 		data->phils[i].ttd = 0;
 		data->phils[i].to_die = data->phils[i].time_before_death;
-
 		i++;
 	}
+}
+
+int	init_threads(t_data	*data)
+{
+	int	i;
+	int	f;
+
+	f = 0;
+	init_time(data);
 	i = 0;
 	while (i < data->phils[i].num_of_phils)
 	{
-		if (pthread_create(&(data->thread[i]), NULL, &munching, &data->phils[i]) == 1)
+		if (pthread_create(&(data->thread[i]), NULL,
+				&munching, &data->phils[i]) == 1)
 			return (0);
 		i++;
 	}
 	if (death_checker(data) == 1)
 		pthread_mutex_unlock(&data->write_lock);
 	i = 0;
-	while (i <data->phils[i].num_of_phils)
+	while (i < data->phils[i].num_of_phils)
 	{
 		pthread_join(data->thread[i], NULL);
 		i++;
 	}
 	destroy_all(data);
-	return (0);
-}
-
-void	destroy_all(t_data	*data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->phils[i].num_of_phils)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		pthread_mutex_destroy(&data->phils[i].tmp);
-		pthread_mutex_destroy(&data->phils[i].tmp2);
-		pthread_mutex_destroy(&data->phils[i].tmp3);
-		i++;
-	}
-	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->meal_lock);
-	pthread_mutex_destroy(&data->dead_lock);
-}
-
-int	final_init(t_data	*data)
-{
-	data->isdead = 0;
-	pthread_mutex_init(&data->write_lock, NULL);
-	pthread_mutex_init(&data->meal_lock, NULL);
-	pthread_mutex_init(&data->dead_lock, NULL);
 	return (0);
 }

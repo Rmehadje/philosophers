@@ -6,23 +6,11 @@
 /*   By: rmehadje <rmehadje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 18:42:43 by rmehadje          #+#    #+#             */
-/*   Updated: 2024/02/04 18:09:10 by rmehadje         ###   ########.fr       */
+/*   Updated: 2024/02/04 20:31:12 by rmehadje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	ft_putstr(char *str)
-{
-	int	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	write(1, "ERROR", 6);
-	write(1, str, len);
-	write (1, "\n", 1);
-}
 
 int	check_if_num(char *str)
 {
@@ -53,18 +41,38 @@ int	last_arg_check(char **argv)
 	return (0);
 }
 
-int	error_messanger(int nbr)
-{
-	if (nbr == 1)
-		ft_putstr(": Wrong Arguments!");
-	if (nbr == 2)
-		ft_putstr(": Cucked");
-	return (1);
-}
-
 void	death_print(t_data	*data, int philosopher_id)
 {
 	pthread_mutex_lock(&data->write_lock);
-	printf("%d has died.\n", philosopher_id);
+	printf("%lld %d has died.\n", ft_real_time()
+		- data->phils[philosopher_id].start, philosopher_id);
 	pthread_mutex_unlock(&data->write_lock);
+}
+
+void	destroy_all(t_data	*data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->phils[i].num_of_phils)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&data->phils[i].tmp);
+		pthread_mutex_destroy(&data->phils[i].tmp2);
+		pthread_mutex_destroy(&data->phils[i].tmp3);
+		i++;
+	}
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->meal_lock);
+	pthread_mutex_destroy(&data->dead_lock);
+	free(data);
+}
+
+int	final_init(t_data	*data)
+{
+	data->isdead = 0;
+	pthread_mutex_init(&data->write_lock, NULL);
+	pthread_mutex_init(&data->meal_lock, NULL);
+	pthread_mutex_init(&data->dead_lock, NULL);
+	return (0);
 }
