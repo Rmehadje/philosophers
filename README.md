@@ -11,3 +11,7 @@ the implementation is in C, and it takes advantage of multithreading whilst util
 
 you may clone the repository:
 
+```
+git clone https://github.com/Rmehadje/philosophers.git
+make
+./philosophers [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_meals(optional)]
